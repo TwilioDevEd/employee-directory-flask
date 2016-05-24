@@ -2,14 +2,13 @@
   <img src="https://static0.twilio.com/marketing/bundles/marketing/img/logos/wordmark-red.svg" alt="Twilio" width="250" />
 </a>
 
-# SMS Two-Factor Authentication
+# SMS/MMS Employee Directory on ASP.NET MVC
 
-[![Build Status](https://travis-ci.org/TwilioDevEd/sms2fa-flask.svg?branch=master)](https://travis-ci.org/TwilioDevEd/sms2fa-flask)
+[![Build Status](https://travis-ci.org/TwilioDevEd/employee-directory-flask.svg?branch=master)](https://travis-ci.org/TwilioDevEd/employee-directory-flask)
 
-<!--
-  You can grab the appropriate description from https://www.twilio.com/docs/tutorials.
--->
-SMS Two-Factor Authentication (SMS-2FA) helps keep your user accounts secure by validating two "factors" of identity. Most login systems only validate a password known by the user. You can make it harder for evildoers to compromise a user account by also validating something a user has, such as their mobile phone.
+Use Twilio to accept SMS messages and turn them into queries against a SQL database. This example functions as an Employee Directory where a mobile phone user can send a text message with a partial string of the person's name and it will return their picture and contact information (Email address and Phone number).
+
+[Tutorial soon]()
 
 ## Local Development
 
