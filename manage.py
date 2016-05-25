@@ -2,6 +2,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask_migrate import upgrade as upgrade_database
 from employee_directory_flask import db, prepare_app
+from employee_directory_flask import parser
 
 app = prepare_app(environment='development')
 migrate = Migrate(app, db)
@@ -16,7 +17,7 @@ def test():
     import sys
     import unittest
     prepare_app(environment='test')
-    # upgrade_database() uncomment when models are there
+    upgrade_database()
     tests = unittest.TestLoader().discover('.', pattern="*_tests.py")
     test_result = unittest.TextTestRunner(verbosity=2).run(tests)
 
@@ -26,7 +27,11 @@ def test():
 
 @manager.command
 def dbseed():
-    pass
+    json_data = open('employees.json').read()
+    employees = parser.parse(json_data)
+    for employee in employees:
+        db.session.add(employee)
+    db.session.commit()
 
 if __name__ == "__main__":
     manager.run()
