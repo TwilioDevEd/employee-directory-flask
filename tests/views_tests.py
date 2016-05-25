@@ -10,11 +10,28 @@ class RootTest(BaseTest):
 
     def test_no_results(self):
         response = self.client.post('/directory/search',
-                                    {'Body': 'you_will_not_find_me'})
+                                    data={'Body': 'you_will_not_find_me'})
         self.assertEquals(200, response.status_code)
 
         root = self.assertXmlDocument(response.data)
-        content = root.xpath('./Message/Body/text()')
+        body = root.xpath('./Message/Body/text()')
 
-        self.assertEquals(1, len(content), response.data)
-        self.assertEquals("We did not find the employee you're looking for", content[0])
+        self.assertEquals(1, len(body), response.data)
+        self.assertEquals("We did not find the employee you're looking for", body[0])
+
+    def test_single_result(self):
+        response = self.client.post('/directory/search',
+                                    data={'Body': 'Wolverine'})
+        self.assertEquals(200, response.status_code)
+
+        root = self.assertXmlDocument(response.data)
+        body = root.xpath('./Message/Body/text()')
+        media = root.xpath('./Message/Media/text()')
+
+        self.assertEquals(1, len(body), response.data)
+        self.assertEquals(1, len(media), response.data)
+
+        expected_body = "Wolverine\n+14155559718\nWolverine@heroes.example.com"
+        self.assertEquals(expected_body, body[0])
+        expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/2/60/537bcaef0f6cf.jpg"
+        self.assertEquals(expected_media, media[0])
