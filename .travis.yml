@@ -10,9 +10,6 @@ env:
   - DEBUG=False
   - SECRET=SuperSecret
   - SQLALCHEMY_DATABASE_URI=sqlite://app.sqlite
-  - TWILIO_ACCOUNT_SID=AC2XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  - TWILIO_AUTH_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  - TWILIO_NUMBER=+15551230987
 script:
   - coverage run --source=employee_directory_flask manage.py test
 after_script:
