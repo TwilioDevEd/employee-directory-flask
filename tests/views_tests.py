@@ -80,3 +80,23 @@ class RootTest(BaseTest):
         self.assertEquals(expected_body, body[0])
         expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/9/e0/526957cdcf6d1.jpg"
         self.assertEquals(expected_media, media[0])
+
+    def test_invalid_option_will_trigger_a_search(self):
+        with self.app.test_client() as client:
+            with client.session_transaction() as session:
+                session['choices'] = ['Thor Girl', 'Frog Thor', 'Thor']
+            response = client.post('/directory/search',
+                                   data={'Body': '51'})
+        self.assertEquals(200, response.status_code)
+
+        root = self.assertXmlDocument(response.data)
+        body = root.xpath('./Message/Body/text()')
+        media = root.xpath('./Message/Media/text()')
+
+        self.assertEquals(1, len(body), response.data)
+        self.assertEquals(1, len(media), response.data)
+
+        expected_body = "X-51\n+14155550804\nX-51@heroes.example.com"
+        self.assertEquals(expected_body, body[0])
+        expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/f/d0/4c003727804b4.jpg"
+        self.assertEquals(expected_media, media[0])

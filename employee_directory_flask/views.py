@@ -13,7 +13,8 @@ def root():
 @app.route('/directory/search', methods=['POST'])
 def search():
     query = request.form['Body']
-    if query.isdigit() and session.get('choices'):
+    choices = session.get('choices', [])
+    if query.isdigit() and choices and (int(query)-1) in range(len(choices)):
         name = session['choices'][int(query)-1]
         employees = Employee.query.filter_by(full_name=name)
         return _send_single_result(employees)
