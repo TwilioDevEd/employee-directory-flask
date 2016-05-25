@@ -5,11 +5,6 @@ from .models import Employee
 NOT_FOUND_MESSAGE = "We did not find the employee you're looking for"
 
 
-@app.route('/')
-def root():
-    return render_template('index.html')
-
-
 @app.route('/directory/search', methods=['POST'])
 def search():
     query = request.form['Body']

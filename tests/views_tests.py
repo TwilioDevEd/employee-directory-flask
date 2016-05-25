@@ -4,11 +4,6 @@ from flask import session
 
 class RootTest(BaseTest):
 
-    def test_root(self):
-        response = self.client.get('/')
-        self.assertEquals(200, response.status_code)
-        self.assertIn('Employee Directory', response.data.decode('utf8'))
-
     def test_no_results(self):
         response = self.client.post('/directory/search',
                                     data={'Body': 'you_will_not_find_me'})
