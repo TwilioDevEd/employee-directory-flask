@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, session
 from . import app
 from twilio import twiml
 from .models import Employee
@@ -17,7 +17,9 @@ def search():
     if len(employees) == 1:
         return _send_single_result(employees)
     elif len(employees) > 1:
-        return _send_multiple_results(employees)
+        names = [employee.full_name for employee in employees]
+        session['choices'] = names
+        return _send_multiple_results(names)
     return _send_not_found()
 
 
@@ -38,10 +40,9 @@ def _send_single_result(employees):
     return str(response)
 
 
-def _send_multiple_results(employees):
+def _send_multiple_results(names):
     response = twiml.Response()
     message = ["We found multiple people, reply with:"]
-    names = [employee.full_name for employee in employees]
     for i, name in enumerate(names, 1):
         message.append("%s for %s" % (i, name))
     message.append("Or start over")
