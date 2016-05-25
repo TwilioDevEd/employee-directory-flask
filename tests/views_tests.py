@@ -35,3 +35,20 @@ class RootTest(BaseTest):
         self.assertEquals(expected_body, body[0])
         expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/2/60/537bcaef0f6cf.jpg"
         self.assertEquals(expected_media, media[0])
+
+    def test_many_results(self):
+        response = self.client.post('/directory/search',
+                                    data={'Body': 'Thor'})
+        self.assertEquals(200, response.status_code)
+
+        root = self.assertXmlDocument(response.data)
+        body = root.xpath('./Message/Body/text()')
+
+        self.assertEquals(1, len(body), response.data)
+
+        expected_body = '\n'.join(["We found multiple people, reply with:",
+                                   "1 for Thor Girl",
+                                   "2 for Frog Thor",
+                                   "3 for Thor",
+                                   "Or start over"])
+        self.assertEquals(expected_body, body[0])
