@@ -12,8 +12,12 @@ def root():
 
 @app.route('/directory/search', methods=['POST'])
 def search():
-    name = request.form['Body']
-    employees = list(Employee.query.filter(Employee.full_name.contains(name)))
+    query = request.form['Body']
+    if query.isdigit() and session.get('choices'):
+        name = session['choices'][int(query)-1]
+        employees = Employee.query.filter_by(full_name=name)
+        return _send_single_result(employees)
+    employees = list(Employee.query.filter(Employee.full_name.contains(query)))
     if len(employees) == 1:
         return _send_single_result(employees)
     elif len(employees) > 1:

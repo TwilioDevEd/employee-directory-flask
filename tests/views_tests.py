@@ -60,3 +60,23 @@ class RootTest(BaseTest):
                         data={'Body': 'Thor'})
             choices = session.get('choices', [])
             self.assertEquals(['Thor Girl', 'Frog Thor', 'Thor'], choices)
+
+    def test_user_can_choose_an_option(self):
+        with self.app.test_client() as client:
+            with client.session_transaction() as session:
+                session['choices'] = ['Thor Girl', 'Frog Thor', 'Thor']
+            response = client.post('/directory/search',
+                                   data={'Body': '1'})
+        self.assertEquals(200, response.status_code)
+
+        root = self.assertXmlDocument(response.data)
+        body = root.xpath('./Message/Body/text()')
+        media = root.xpath('./Message/Media/text()')
+
+        self.assertEquals(1, len(body), response.data)
+        self.assertEquals(1, len(media), response.data)
+
+        expected_body = "Thor Girl\n+14155550820\nThorGirl@heroes.example.com"
+        self.assertEquals(expected_body, body[0])
+        expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/9/e0/526957cdcf6d1.jpg"
+        self.assertEquals(expected_media, media[0])
