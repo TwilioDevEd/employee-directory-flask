@@ -107,7 +107,7 @@ $ ngrok http 5000
 ```
 
 ### How To Demo
-1. Text your twilio number the name "Iron"
+1. Text your Twilio number the name "Iron"
 1. Should get the following response:
 
    ```
