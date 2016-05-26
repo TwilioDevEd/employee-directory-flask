@@ -17,7 +17,8 @@ def search():
         return _send_single_result(employees)
     elif len(employees) > 1:
         return _send_multiple_results(employees)
-    return _send_not_found()
+    else:
+        return _send_not_found()
 
 
 def _send_not_found():
