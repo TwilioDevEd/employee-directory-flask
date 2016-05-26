@@ -32,7 +32,7 @@ class RootTest(BaseTest):
         expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/2/60/537bcaef0f6cf.jpg"
         self.assertEquals(expected_media, media[0])
 
-    def test_multiple_results_will_list_on_message_body(self):
+    def test_multiple_results_list_on_message_body(self):
         response = self.client.post('/directory/search',
                                     data={'Body': 'Thor'})
         self.assertEquals(200, response.status_code)
@@ -49,14 +49,14 @@ class RootTest(BaseTest):
                                    "Or start over"])
         self.assertEquals(expected_body, body[0])
 
-    def test_multiple_results_will_store_names_on_session(self):
+    def test_multiple_results_store_names_on_session(self):
         with self.app.test_client() as client:
             client.post('/directory/search',
                         data={'Body': 'Thor'})
             choices = session.get('choices', [])
             self.assertEquals(['Thor Girl', 'Frog Thor', 'Thor'], choices)
 
-    def test_user_can_choose_an_option(self):
+    def test_user_chooses_an_option(self):
         with self.app.test_client() as client:
             with client.session_transaction() as session:
                 session['choices'] = ['Thor Girl', 'Frog Thor', 'Thor']
@@ -76,7 +76,7 @@ class RootTest(BaseTest):
         expected_media = "http://i.annihil.us/u/prod/marvel/i/mg/9/e0/526957cdcf6d1.jpg"
         self.assertEquals(expected_media, media[0])
 
-    def test_invalid_option_will_trigger_a_search(self):
+    def test_invalid_option_triggers_a_search(self):
         with self.app.test_client() as client:
             with client.session_transaction() as session:
                 session['choices'] = ['Thor Girl', 'Frog Thor', 'Thor']
