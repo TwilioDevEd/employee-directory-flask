@@ -26,6 +26,17 @@ def _send_not_found():
     return str(response)
 
 
+def _send_single_result(employees):
+    response = twiml.Response()
+    employee = employees[0]
+    employee_data = '\n'.join([employee.full_name,
+                               employee.phone_number,
+                               employee.email])
+    with response.message(employee_data) as message:
+        message.media(employee.image_url)
+    return str(response)
+
+
 def _is_choice_answer(query):
     choices = session.get('choices', [])
     if query.isdigit():
@@ -38,17 +49,6 @@ def _send_selected_employee(query):
     name = session['choices'][int(query)-1]
     employees = Employee.query.filter_by(full_name=name)
     return _send_single_result(employees)
-
-
-def _send_single_result(employees):
-    response = twiml.Response()
-    employee = employees[0]
-    employee_data = '\n'.join([employee.full_name,
-                               employee.phone_number,
-                               employee.email])
-    with response.message(employee_data) as message:
-        message.media(employee.image_url)
-    return str(response)
 
 
 def _send_multiple_results(employees):
