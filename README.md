@@ -41,19 +41,6 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
     pip install -r requirements.txt
     ```
 
-
-1. Copy the sample configuration file and edit it to match your configuration.
-
-   ```bash
-   $ cp .env.example .env
-   ```
-
-   You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
-   [Twilio Account Settings](https://www.twilio.com/user/account/settings).
-   You will also need a `TWILIO_NUMBER`, which you may find [here](https://www.twilio.com/user/account/phone-numbers/incoming).
-
-   Run `source .env` to export the environment variables.
-
 1. Run the migrations.
 
     Our app uses SQLite, so you probably will not need to install additional software.
