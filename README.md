@@ -32,7 +32,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    - If using [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/):
 
        ```bash
-       mkvirtualenv automated-survey
+       mkvirtualenv employee-directory-flask
        ```
 
 1. Install the dependencies.
