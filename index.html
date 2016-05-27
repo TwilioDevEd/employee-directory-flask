@@ -1,0 +1,96 @@
+<!DOCTYPE html><html><head><title>Employee Directory Flask</title><style>body, html {
+  height:100%;
+  width:100%;
+  padding:0;
+  margin:0;
+  overflow:hidden;
+  background-color:#ddd;
+}
+.wrapper {
+  height:100%;
+  width:100%;
+}</style><link rel="shortcut icon" href="//twilio.com/bundles/marketing/img/favicons/favicon.ico"><link rel="apple-touch-icon" href="//twilio.com/bundles/marketing/img/favicons/favicon_57.png"><link rel="apple-touch-icon" sizes="72x72" href="//twilio.com/bundles/marketing/img/favicons/favicon_72.png"><link rel="apple-touch-icon" sizes="114x114" href="//twilio.com/bundles/marketing/img/favicons/favicon_114.png"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"><link rel="stylesheet" href="viewsaurus.css"></head><body><div class="wrapper"><div id="viewsaurus" data-title="Employee Directory Flask"><div class="saurus-panes"><div class="saurus-prose"><div class="saurus-prose-header"><div class="title-outer"><span class="step-title">Employee Directory Flask</span></div></div><div class="saurus-nav-buttons"><div class="saurus-nav-button nav-overview"><div class="saurus-nav-button-inner"><i class="fa fa-fw fa-list"></i></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-previous"><div class="saurus-nav-button-inner"><a href=""> <i class="fa fa-fw fa-play fa-rotate-180"></i></a></div><div class="nav-divider"></div></div><div class="saurus-nav-button nav-next clickable"><div class="saurus-nav-button-inner"><a href="#1"> <i class="fa fa-fw fa-play"></i></a></div></div><div class="saurus-next-title"><span class="next-title-inner"></span></div></div><div class="saurus-progress-bar"></div><div class="saurus-start"><p>Use Twilio to accept SMS messages and turn them into queries against a PostgreSQL database. This example functions as an Employee Directory where a mobile phone user can send a text message with a partial string of a person's name and it will return their picture and contact information (e-mail address and phone number).</p><a href="#0">Start Tutorial</a></div><div class="saurus-content"><div data-title="Employee Directory Flask" class="chapter"><div data-title="What Are We Building?" data-file="employee_directory_flask/models.py" class="step"><h2 id="employee-directory">Employee Directory</h2>
+<p>Learn how to implement an employee directory that you can query using SMS.
+Request information from anyone at your company just by sending a text message
+to a <a href="//www.twilio.com/help/faq/phone-numbers">Twilio Number</a></p>
+<p>Here is how it works at a high level:</p>
+<ul>
+<li>The user sends a SMS with an Employee&#39;s name to the Twilio number.</li>
+<li>The user receives information for the requested Employee.</li>
+</ul>
+<p>Let&#39;s get started!</p>
+<hr>
+<p><strong>See Also:</strong></p>
+<ul>
+<li><a href="//flask.pocoo.org/docs/latest/quickstart/">Flask Quickstart</a></li>
+<li><a href="//twilio-python.readthedocs.org/en/latest/index.html#getting-started">Getting started with the Twilio Python Helper Library</a></li>
+</ul>
+</div><div data-title="Handling Twilio's SMS Request" data-file="employee_directory_flask/views.py" data-highlight="8-21" class="step"><h2 id="handling-twilio-s-sms-request">Handling Twilio&#39;s SMS Request</h2>
+<p>When your <a href="//www.twilio.com/help/faq/phone-numbers">Twilio Number</a> receives
+an SMS, Twilio will make a POST request to <code>/directory/search</code> asking for <a href="//www.twilio.com/docs/api/twiml">TwiML</a>
+instructions.</p>
+<p>Once the application identifies one of the 3 possible scenarios
+(single partial match, multiple partial match or no match),
+it will send a <a href="//www.twilio.com/docs/api/twiml">TwiML</a> response to Twilio. This response will instruct Twilio
+to send an SMS <a href="//www.twilio.com/docs/api/twiml/sms/message">Message</a>
+back to the user.</p>
+<p>Let&#39;s take a closer look to each one of the scenarios.</p>
+</div><div data-title="Single Partial Match" data-file="employee_directory_flask/views.py" data-highlight="15-17,30-38" class="step"><h2 id="finding-a-single-partial-employee-match">Finding a Single Partial Employee Match</h2>
+<p>This is the simplest scenario. We&#39;ll verify that only 1 match is
+obtained. If a single match is found, a message containing this
+employee&#39;s information is built and sent to Twilio as TwiML instructions.</p>
+<p>If multiple matches are found we&#39;ll try to do a multiple partial match.
+That is our next possible scenario.</p>
+</div><div data-title="Multiple Partial Match" data-file="employee_directory_flask/views.py" data-highlight="55-64" class="step"><h2 id="finding-multiple-partial-employee-matches">Finding Multiple Partial Employee Matches</h2>
+<p>At this point we have already tried to use the user&#39;s query as a single
+partial match. Now we&#39;ll try to get a partial match that returns more
+than one result. We&#39;ll use <a href="https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html">Twilio
+Cookies</a>
+to store suggestions. The only difference here is that we use a list to
+store suggestions so that the user can reply with a number that
+references one of the suggestions in order to get all the employee&#39;s
+information. The way this information is stored will be explained on the
+next step.</p>
+<p>The last scenario is so simple that a step won&#39;t be created for it. If none
+of the previous scenarios occur, it means that there is no employee in the
+database that matches the user&#39;s query. In that case, a reply will be sent
+to the user explaining that their query doesn&#39;t match any of the employees
+found on the database.</p>
+<hr>
+<p><strong>See Also:</strong></p>
+<ul>
+<li><a href="//flask.pocoo.org/docs/0.10/quickstart/#sessions">Flask Sessions</a></li>
+</ul>
+</div><div data-title="Storing Suggestions With Cookies" data-file="employee_directory_flask/views.py" data-highlight="42,50,57" class="step"><h2 id="storing-suggestions-with-cookies">Storing Suggestions With Cookies</h2>
+<p>When a user gets a partial match by searching the employee directory, we
+reply with one or more suggestions. We need to store this suggestions, so
+the next time the user sends an SMS we know this is not a query for a new
+employee, but a selection of one of the suggestions.</p>
+<p>We&#39;ll use <a href="https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html">Twilio Cookies</a> and a <a href="http://flask.pocoo.org/docs/0.10/quickstart/#sessions">Flask Session</a> to store suggestions. They will allow you to <a href="https://www.twilio.com/docs/quickstart/python/sms/tracking-conversations">keep track of an
+SMS conversation</a> between multiple numbers and
+your Twilio powered application.</p>
+<hr>
+<p><strong>See Also:</strong></p>
+<ul>
+<li><a href="http://flask.pocoo.org/docs/0.10/quickstart/#sessions">Flask Sessions</a></li>
+<li><a href="https://www.twilio.com/docs/quickstart/python/sms/tracking-conversations">Tracking SMS Conversations</a></li>
+<li><a href="https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html">Twilio Cookies</a></li>
+</ul>
+</div><div class="step"><h2 id="where-to-next-">Where to next?</h2>
+<p>That&#39;s it! We have just implemented employee directory using Flask.
+Now you can get your employee&#39;s information by texting a Twilio number.</p>
+<p>If you&#39;re a Python developer working with Twilio, you might also enjoy these
+tutorials:</p>
+<p><a href="//www.twilio.com/docs/tutorials/walkthrough/automated-survey/python/flask"><strong>Automated-Survey</strong></a></p>
+<p>Instantly collect structured data from your users with a survey conducted
+over a voice call or SMS text messages. Let&#39;s get started!</p>
+<p><a href="//www.twilio.com/docs/tutorials/walkthrough/eta-notifications/python/flask"><strong>ETA-Notifications</strong></a></p>
+<p>Learn how to implement ETA Notifications using Flask and Twilio.</p>
+<p>Thanks for checking this tutorial out! If you have any feedback
+to share with us, we&#39;d love to hear it.
+<a href="mailto:deved-oss@twilio.com">Contact the Twilio Developer Education Team</a> to let us know what you think.</p>
+</div></div>
+<div class="saurus-files" style="display:none;"><textarea class="saurus-file" data-file="employee_directory_flask/models.py" data-mode="python">ZnJvbSBmbGFzay5leHQuc3FsYWxjaGVteSBpbXBvcnQgU1FMQWxjaGVteQpkYiA9IFNRTEFsY2hlbXkoKQoKCmNsYXNzIEVtcGxveWVlKGRiLk1vZGVsKToKICAgIF9fdGFibGVuYW1lX18gPSAnZW1wbG95ZWVzJwoKICAgIGZ1bGxfbmFtZSA9IGRiLkNvbHVtbihkYi5TdHJpbmcsIG51bGxhYmxlPUZhbHNlKQogICAgZW1haWwgPSBkYi5Db2x1bW4oZGIuU3RyaW5nLCBudWxsYWJsZT1GYWxzZSwgcHJpbWFyeV9rZXk9VHJ1ZSkKICAgIHBob25lX251bWJlciA9IGRiLkNvbHVtbihkYi5TdHJpbmcsIG51bGxhYmxlPUZhbHNlKQogICAgaW1hZ2VfdXJsID0gZGIuQ29sdW1uKGRiLlN0cmluZywgbnVsbGFibGU9RmFsc2UpCg==</textarea>
+<textarea class="saurus-file" data-file="employee_directory_flask/views.py" data-mode="python">ZnJvbSBmbGFzayBpbXBvcnQgcmVxdWVzdCwgc2Vzc2lvbgpmcm9tIC4gaW1wb3J0IGFwcApmcm9tIHR3aWxpbyBpbXBvcnQgdHdpbWwKZnJvbSAubW9kZWxzIGltcG9ydCBFbXBsb3llZQpOT1RfRk9VTkRfTUVTU0FHRSA9ICJXZSBkaWQgbm90IGZpbmQgdGhlIGVtcGxveWVlIHlvdSdyZSBsb29raW5nIGZvciIKCgpAYXBwLnJvdXRlKCcvZGlyZWN0b3J5L3NlYXJjaCcsIG1ldGhvZHM9WydQT1NUJ10pCmRlZiBzZWFyY2goKToKICAgIHF1ZXJ5ID0gcmVxdWVzdC5mb3JtWydCb2R5J10KCiAgICBpZiBfaXNfY2hvaWNlX2Fuc3dlcihxdWVyeSk6CiAgICAgICAgcmV0dXJuIF9zZW5kX3NlbGVjdGVkX2VtcGxveWVlKHF1ZXJ5KQoKICAgIGVtcGxveWVlcyA9IGxpc3QoRW1wbG95ZWUucXVlcnkuZmlsdGVyKEVtcGxveWVlLmZ1bGxfbmFtZS5jb250YWlucyhxdWVyeSkpKQogICAgaWYgbGVuKGVtcGxveWVlcykgPT0gMToKICAgICAgICByZXR1cm4gX3NlbmRfc2luZ2xlX3Jlc3VsdChlbXBsb3llZXMpCiAgICBlbGlmIGxlbihlbXBsb3llZXMpID4gMToKICAgICAgICByZXR1cm4gX3NlbmRfbXVsdGlwbGVfcmVzdWx0cyhlbXBsb3llZXMpCiAgICBlbHNlOgogICAgICAgIHJldHVybiBfc2VuZF9ub3RfZm91bmQoKQoKCmRlZiBfc2VuZF9ub3RfZm91bmQoKToKICAgIHJlc3BvbnNlID0gdHdpbWwuUmVzcG9uc2UoKQogICAgcmVzcG9uc2UubWVzc2FnZShOT1RfRk9VTkRfTUVTU0FHRSkKICAgIHJldHVybiBzdHIocmVzcG9uc2UpCgoKZGVmIF9zZW5kX3NpbmdsZV9yZXN1bHQoZW1wbG95ZWVzKToKICAgIHJlc3BvbnNlID0gdHdpbWwuUmVzcG9uc2UoKQogICAgZW1wbG95ZWUgPSBlbXBsb3llZXNbMF0KICAgIGVtcGxveWVlX2RhdGEgPSAnXG4nLmpvaW4oW2VtcGxveWVlLmZ1bGxfbmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVtcGxveWVlLnBob25lX251bWJlciwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVtcGxveWVlLmVtYWlsXSkKICAgIHdpdGggcmVzcG9uc2UubWVzc2FnZShlbXBsb3llZV9kYXRhKSBhcyBtZXNzYWdlOgogICAgICAgIG1lc3NhZ2UubWVkaWEoZW1wbG95ZWUuaW1hZ2VfdXJsKQogICAgcmV0dXJuIHN0cihyZXNwb25zZSkKCgpkZWYgX2lzX2Nob2ljZV9hbnN3ZXIocXVlcnkpOgogICAgY2hvaWNlcyA9IHNlc3Npb24uZ2V0KCdjaG9pY2VzJywgW10pCiAgICBpZiBxdWVyeS5pc2RpZ2l0KCk6CiAgICAgICAgcXVlcnkgPSBpbnQocXVlcnkpCiAgICAgICAgcmV0dXJuIChxdWVyeS0xKSBpbiByYW5nZShsZW4oY2hvaWNlcykpCiAgICByZXR1cm4gRmFsc2UKCgpkZWYgX3NlbmRfc2VsZWN0ZWRfZW1wbG95ZWUocXVlcnkpOgogICAgbmFtZSA9IHNlc3Npb25bJ2Nob2ljZXMnXVtpbnQocXVlcnkpLTFdCiAgICBlbXBsb3llZXMgPSBFbXBsb3llZS5xdWVyeS5maWx0ZXJfYnkoZnVsbF9uYW1lPW5hbWUpCiAgICByZXR1cm4gX3NlbmRfc2luZ2xlX3Jlc3VsdChlbXBsb3llZXMpCgoKZGVmIF9zZW5kX211bHRpcGxlX3Jlc3VsdHMoZW1wbG95ZWVzKToKICAgIG5hbWVzID0gW2VtcGxveWVlLmZ1bGxfbmFtZSBmb3IgZW1wbG95ZWUgaW4gZW1wbG95ZWVzXQogICAgc2Vzc2lvblsnY2hvaWNlcyddID0gbmFtZXMKICAgIHJlc3BvbnNlID0gdHdpbWwuUmVzcG9uc2UoKQogICAgbWVzc2FnZSA9IFsiV2UgZm91bmQgbXVsdGlwbGUgcGVvcGxlLCByZXBseSB3aXRoOiJdCiAgICBmb3IgaSwgbmFtZSBpbiBlbnVtZXJhdGUobmFtZXMsIDEpOgogICAgICAgIG1lc3NhZ2UuYXBwZW5kKCIlcyBmb3IgJXMiICUgKGksIG5hbWUpKQogICAgbWVzc2FnZS5hcHBlbmQoIk9yIHN0YXJ0IG92ZXIiKQogICAgcmVzcG9uc2UubWVzc2FnZSgnXG4nLmpvaW4obWVzc2FnZSkpCiAgICByZXR1cm4gc3RyKHJlc3BvbnNlKQo=</textarea>
+</div>
+</div><div class="saurus-overview"><ul></ul></div></div><div class="saurus-code"><div class="file-path"><span class="crumb-container"></span><i class="fa fa-fw fa-folder"></i></div><div class="saurus-editor"></div></div><div class="saurus-explorer"><div class="saurus-file-list"></div><a href="https://github.com/TwilioDevEd/employee-directory-flask" target="_blank" class="explorer-get-code"> <i class="fa fa-lg fa-github-square"> </i>View Code on GitHub</a></div></div></div></div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script><script src="ace/ace.js"></script><script src="ace/theme-monokai.js"></script><script src="viewsaurus.js"></script></body></html>
