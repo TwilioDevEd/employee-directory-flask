@@ -48,7 +48,7 @@
     data-file='employee_directory_flask/views.py',
     data-highlight='15-17,30-38')
     :markdown
-      ## Finding a Single Partial Employee Match
+      ## Single Partial Employee Match
 
       This is the simplest scenario. We'll verify that only 1 match is
       obtained. If a single match is found, a message containing this
@@ -62,15 +62,15 @@
     data-file='employee_directory_flask/views.py',
     data-highlight='55-64')
     :markdown
-      ## Finding Multiple Partial Employee Matches
+      ## Multiple Partial Employee Matches
 
       At this point we have already tried to use the user's query as a single
       partial match. Now we'll try to get a partial match that returns more
       than one result. We'll use [Twilio
       Cookies](https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html)
       to store suggestions. The only difference here is that we use a list to
-      store suggestions so that the user can reply with a number that
-      references one of the suggestions in order to get all the employee's
+      store suggestions. This way the user can reply with a number that
+      references one of the suggestions in order to get the employee's
       information. The way this information is stored will be explained on the
       next step.
 
@@ -93,10 +93,10 @@
       ## Storing Suggestions With Cookies
 
       When a user gets a partial match by searching the employee directory, we
-      reply with one or more suggestions. We need to store this suggestions, so
+      reply with one or more suggestions. We need to store these suggestions, so
       the next time the user sends an SMS we know this is not a query for a new
       employee, but a selection of one of the suggestions.
-      
+
       We'll use [Twilio Cookies][Twilio Cookies] and a [Flask Session][Flask
       Sessions] to store suggestions. They will allow you to [keep track of an
       SMS conversation][Tracking Conversations] between multiple numbers and
@@ -126,7 +126,7 @@
       [**Automated-Survey**](//www.twilio.com/docs/tutorials/walkthrough/automated-survey/python/flask)
 
       Instantly collect structured data from your users with a survey conducted
-      over a voice call or SMS text messages. Let's get started!
+      over a call or SMS text messages. Let's get started!
 
       [**ETA-Notifications**](//www.twilio.com/docs/tutorials/walkthrough/eta-notifications/python/flask)
 

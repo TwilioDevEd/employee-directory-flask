@@ -35,20 +35,20 @@ it will send a <a href="//www.twilio.com/docs/api/twiml">TwiML</a> response to T
 to send an SMS <a href="//www.twilio.com/docs/api/twiml/sms/message">Message</a>
 back to the user.</p>
 <p>Let&#39;s take a closer look to each one of the scenarios.</p>
-</div><div data-title="Single Partial Match" data-file="employee_directory_flask/views.py" data-highlight="15-17,30-38" class="step"><h2 id="finding-a-single-partial-employee-match">Finding a Single Partial Employee Match</h2>
+</div><div data-title="Single Partial Match" data-file="employee_directory_flask/views.py" data-highlight="15-17,30-38" class="step"><h2 id="single-partial-employee-match">Single Partial Employee Match</h2>
 <p>This is the simplest scenario. We&#39;ll verify that only 1 match is
 obtained. If a single match is found, a message containing this
 employee&#39;s information is built and sent to Twilio as TwiML instructions.</p>
 <p>If multiple matches are found we&#39;ll try to do a multiple partial match.
 That is our next possible scenario.</p>
-</div><div data-title="Multiple Partial Match" data-file="employee_directory_flask/views.py" data-highlight="55-64" class="step"><h2 id="finding-multiple-partial-employee-matches">Finding Multiple Partial Employee Matches</h2>
+</div><div data-title="Multiple Partial Match" data-file="employee_directory_flask/views.py" data-highlight="55-64" class="step"><h2 id="multiple-partial-employee-matches">Multiple Partial Employee Matches</h2>
 <p>At this point we have already tried to use the user&#39;s query as a single
 partial match. Now we&#39;ll try to get a partial match that returns more
 than one result. We&#39;ll use <a href="https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html">Twilio
 Cookies</a>
 to store suggestions. The only difference here is that we use a list to
-store suggestions so that the user can reply with a number that
-references one of the suggestions in order to get all the employee&#39;s
+store suggestions. This way the user can reply with a number that
+references one of the suggestions in order to get the employee&#39;s
 information. The way this information is stored will be explained on the
 next step.</p>
 <p>The last scenario is so simple that a step won&#39;t be created for it. If none
@@ -63,7 +63,7 @@ found on the database.</p>
 </ul>
 </div><div data-title="Storing Suggestions With Cookies" data-file="employee_directory_flask/views.py" data-highlight="42,50,57" class="step"><h2 id="storing-suggestions-with-cookies">Storing Suggestions With Cookies</h2>
 <p>When a user gets a partial match by searching the employee directory, we
-reply with one or more suggestions. We need to store this suggestions, so
+reply with one or more suggestions. We need to store these suggestions, so
 the next time the user sends an SMS we know this is not a query for a new
 employee, but a selection of one of the suggestions.</p>
 <p>We&#39;ll use <a href="https://www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html">Twilio Cookies</a> and a <a href="http://flask.pocoo.org/docs/0.10/quickstart/#sessions">Flask Session</a> to store suggestions. They will allow you to <a href="https://www.twilio.com/docs/quickstart/python/sms/tracking-conversations">keep track of an
@@ -83,7 +83,7 @@ Now you can get your employee&#39;s information by texting a Twilio number.</p>
 tutorials:</p>
 <p><a href="//www.twilio.com/docs/tutorials/walkthrough/automated-survey/python/flask"><strong>Automated-Survey</strong></a></p>
 <p>Instantly collect structured data from your users with a survey conducted
-over a voice call or SMS text messages. Let&#39;s get started!</p>
+over a call or SMS text messages. Let&#39;s get started!</p>
 <p><a href="//www.twilio.com/docs/tutorials/walkthrough/eta-notifications/python/flask"><strong>ETA-Notifications</strong></a></p>
 <p>Learn how to implement ETA Notifications using Flask and Twilio.</p>
 <p>Thanks for checking this tutorial out! If you have any feedback
