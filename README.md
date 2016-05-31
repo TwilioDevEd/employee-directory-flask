@@ -6,7 +6,7 @@
 
 [![Build Status](https://travis-ci.org/TwilioDevEd/employee-directory-flask.svg?branch=master)](https://travis-ci.org/TwilioDevEd/employee-directory-flask)
 
-Use Twilio to accept SMS messages and turn them into queries against a SQL database. This example functions as an Employee Directory where a mobile phone user can send a text message with a partial string of the person's name and it will return their picture and contact information (Email address and Phone number).
+Use Twilio to accept SMS messages and turn them into queries against a SQL database. These are example functions where you get information from an Employee Directory through the request of an SMS. A mobile phone user can send a text message with a partial string of the person's name and it will return their picture and contact information (Email address and Phone number).
 
 [Tutorial soon]()
 
@@ -22,6 +22,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    ```
 
 1. Create a new virtual environment.
+
    - If using vanilla [virtualenv](https://virtualenv.pypa.io/en/latest/):
 
        ```bash
@@ -49,7 +50,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    python manage.py db upgrade
    ```
 
-1. Seed the database:
+1. Seed the database.
 
    ```bash
    python manage.py dbseed
@@ -69,8 +70,8 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
     python manage.py runserver
     ```
 
-1. Start ngrok
-   
+1. Start ngrok.
+
    To actually forward incoming SMSs, your development server will need to be publicly accessible.
    [We recommend using ngrok to solve this problem](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html).
 
@@ -80,7 +81,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    ```
    Once ngrok is running, it will look something like this: `http://9a159ccf.ngrok.io`
 
-1. Configure Twilio to call your webhooks
+1. Configure Twilio to call your webhooks.
 
    You will also need to configure Twilio to call your application when calls are received
    on your _Twilio Number_. The **SMS & MMS Request URL** should look something like this:
@@ -107,7 +108,9 @@ $ ngrok http 5000
 ```
 
 ### How To Demo
+
 1. Text your Twilio number the name "Iron"
+
 1. Should get the following response:
 
    ```
@@ -117,6 +120,7 @@ $ ngrok http 5000
    Or start over
    ```
 1. Reply with 1
+
 1. Should get the following response:
 
    ```
@@ -126,7 +130,7 @@ $ ngrok http 5000
    IronMan@heroes.example.com
    [the image goes here]
    ```
-    
+
 
 ## Meta
 
