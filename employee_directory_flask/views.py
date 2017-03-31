@@ -1,7 +1,13 @@
 from flask import request, session
 from . import app
-from twilio import twiml
 from .models import Employee
+from twilio.twiml.messaging_response import (
+    MessagingResponse,
+    Message,
+    Body,
+    Media
+)
+
 NOT_FOUND_MESSAGE = "We did not find the employee you're looking for"
 
 
@@ -22,20 +28,21 @@ def search():
 
 
 def _send_not_found():
-    response = twiml.Response()
+    response = MessagingResponse()
     response.message(NOT_FOUND_MESSAGE)
     return str(response)
 
 
 def _send_single_result(employees):
-    response = twiml.Response()
+    response = MessagingResponse()
     employee = employees[0]
     employee_data = '\n'.join([employee.full_name,
                                employee.phone_number,
                                employee.email])
-    with response.message(employee_data) as message:
-        message.media(employee.image_url)
-    return str(response)
+    message = Message()
+    message.append(Body(employee_data))
+    message.append(Media(employee.image_url))
+    return str(response.append(message))
 
 
 def _is_choice_answer(query):
@@ -55,7 +62,7 @@ def _send_selected_employee(query):
 def _send_multiple_results(employees):
     names = [employee.full_name for employee in employees]
     session['choices'] = names
-    response = twiml.Response()
+    response = MessagingResponse()
     message = ["We found multiple people, reply with:"]
     for i, name in enumerate(names, 1):
         message.append("%s for %s" % (i, name))
