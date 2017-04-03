@@ -8,7 +8,7 @@
 
 Use Twilio to accept SMS messages and turn them into queries against a SQL database. These are example functions where you get information from an Employee Directory through the request of an SMS. A mobile phone user can send a text message with a partial string of the person's name and it will return their picture and contact information (Email address and Phone number).
 
-[Tutorial soon]()
+[Read the full tutorial here](https://www.twilio.com/docs/tutorials/walkthrough/employee-directory/python/flask)!
 
 ## Local Development
 

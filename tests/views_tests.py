@@ -10,7 +10,7 @@ class RootTest(BaseTest):
         self.assertEquals(200, response.status_code)
 
         root = self.assertXmlDocument(response.data)
-        body = root.xpath('./Message/Body/text()')
+        body = root.xpath('./Message/text()')
 
         self.assertEquals(1, len(body), response.data)
         self.assertEquals("We did not find the employee you're looking for", body[0])
@@ -38,7 +38,7 @@ class RootTest(BaseTest):
         self.assertEquals(200, response.status_code)
 
         root = self.assertXmlDocument(response.data)
-        body = root.xpath('./Message/Body/text()')
+        body = root.xpath('./Message/text()')
 
         self.assertEquals(1, len(body), response.data)
 
