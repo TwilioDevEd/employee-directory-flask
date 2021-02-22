@@ -4,12 +4,15 @@ import json
 
 
 class ParserTest(BaseTest):
-
     def test_model_from_json_string(self):
-        data = [{"fullName": "Spider-Man",
-                 "imageUrl": "http://example.com/526548a343e4b.jpg",
-                 "email": "Spider-Man@heroes.example.com",
-                 "phoneNumber": "+14155559610"}]
+        data = [
+            {
+                "fullName": "Spider-Man",
+                "imageUrl": "http://example.com/526548a343e4b.jpg",
+                "email": "Spider-Man@heroes.example.com",
+                "phoneNumber": "+14155559610",
+            }
+        ]
         employees = parser.parse(json.dumps(data))
 
         self.assertEquals(len(data), len(employees))

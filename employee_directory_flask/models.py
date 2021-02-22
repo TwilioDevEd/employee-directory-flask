@@ -1,5 +1,4 @@
-from flask.ext.sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+from employee_directory_flask import db
 
 
 class Employee(db.Model):

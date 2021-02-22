@@ -21,25 +21,25 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    $ cd employee-directory-flask
    ```
 
-1. Create a new virtual environment.
+1. Create and activate a new python3 virtual environment.
 
-   - If using vanilla [virtualenv](https://virtualenv.pypa.io/en/latest/):
-
-       ```bash
-       virtualenv venv
-       source venv/bin/activate
-       ```
-
-   - If using [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/):
-
-       ```bash
-       mkvirtualenv employee-directory-flask
-       ```
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
 
 1. Install the dependencies.
 
    ```bash
    pip install -r requirements.txt
+   ```
+
+1. Copy the `.env.example` file to `.env`, and edit it to match your database.
+
+1. Activate Flask development environment
+   
+   ```bash
+   export FLASK_ENV=development
    ```
 
 1. Run the migrations.
@@ -61,7 +61,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
 1. Make sure the tests succeed.
 
     ```bash
-    $ coverage run manage.py test
+    python manage.py test
     ```
 
 1. Start the server.
@@ -77,7 +77,7 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
 
 
    ```bash
-   $ ngrok http 5000
+   ngrok http 5000
    ```
    Once ngrok is running, it will look something like this: `http://9a159ccf.ngrok.io`
 
@@ -104,7 +104,7 @@ for more details on how to use ngrok. If you are using version 2.x, exposing
 a specific port should be easily done with the following command:
 
 ```bash
-$ ngrok http 5000
+ngrok http 5000
 ```
 
 ### How To Demo

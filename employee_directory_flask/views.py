@@ -1,12 +1,7 @@
 from flask import request, session
 from . import app
 from .models import Employee
-from twilio.twiml.messaging_response import (
-    MessagingResponse,
-    Message,
-    Body,
-    Media
-)
+from twilio.twiml.messaging_response import MessagingResponse, Message, Body, Media
 
 NOT_FOUND_MESSAGE = "We did not find the employee you're looking for"
 
@@ -36,11 +31,10 @@ def _send_not_found():
 def _send_single_result(employees):
     response = MessagingResponse()
     employee = employees[0]
-    employee_data = '\n'.join([employee.full_name,
-                               employee.phone_number,
-                               employee.email])
     message = Message()
-    message.append(Body(employee_data))
+    message.append(
+        Body(f'{employee.full_name}\n{employee.phone_number}\n{employee.email}')
+    )
     message.append(Media(employee.image_url))
     return str(response.append(message))
 
@@ -49,12 +43,12 @@ def _is_choice_answer(query):
     choices = session.get('choices', [])
     if query.isdigit():
         query = int(query)
-        return (query-1) in range(len(choices))
+        return (query - 1) in range(len(choices))
     return False
 
 
 def _send_selected_employee(query):
-    name = session['choices'][int(query)-1]
+    name = session['choices'][int(query) - 1]
     employees = Employee.query.filter_by(full_name=name)
     return _send_single_result(employees)
 

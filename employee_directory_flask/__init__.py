@@ -1,21 +1,19 @@
-from employee_directory_flask.config import config_env_files
-from employee_directory_flask.models import db
 from flask import Flask
-
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+
+from employee_directory_flask.config import config_env_files
+
+db = SQLAlchemy()
 
 app = Flask(__name__)
 Bootstrap(app)
+env = app.config.get("ENV", "production")
 
 
-def prepare_app(environment='development', p_db=db):
+def prepare_app(environment=env, p_db=db):
     app.config.from_object(config_env_files[environment])
     p_db.init_app(app)
-    from . import views
+    from . import views  # noqa F401
+
     return app
-
-
-def save_and_commit(item):
-    db.session.add(item)
-    db.session.commit()
-db.save = save_and_commit

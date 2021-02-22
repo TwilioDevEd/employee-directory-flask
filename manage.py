@@ -1,11 +1,10 @@
-from flask.ext.script import Manager
-from flask.ext.migrate import Migrate, MigrateCommand
-from flask_migrate import upgrade as upgrade_database
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 from employee_directory_flask import db, prepare_app
 from employee_directory_flask import parser
 from employee_directory_flask.models import Employee
 
-app = prepare_app(environment='development')
+app = prepare_app()
 migrate = Migrate(app, db)
 
 manager = Manager(app)
@@ -17,9 +16,8 @@ def test():
     """Run the unit tests."""
     import sys
     import unittest
-    prepare_app(environment='test')
-    upgrade_database()
-    dbseed()
+
+    prepare_app(environment='testing')
     tests = unittest.TestLoader().discover('.', pattern="*_tests.py")
     test_result = unittest.TextTestRunner(verbosity=2).run(tests)
 
@@ -35,6 +33,7 @@ def dbseed():
     for employee in employees:
         db.session.add(employee)
     db.session.commit()
+
 
 if __name__ == "__main__":
     manager.run()
