@@ -4,7 +4,7 @@
 
 # SMS/MMS Employee Directory on Python/Flask
 
-[![Build Status](https://travis-ci.org/TwilioDevEd/employee-directory-flask.svg?branch=master)](https://travis-ci.org/TwilioDevEd/employee-directory-flask)
+![](https://github.com/TwilioDevEd/employee-directory-flask/workflows/Flask/badge.svg)
 
 Use Twilio to accept SMS messages and turn them into queries against a SQL database. These are example functions where you get information from an Employee Directory through the request of an SMS. A mobile phone user can send a text message with a partial string of the person's name and it will return their picture and contact information (Email address and Phone number).
 
@@ -135,5 +135,5 @@ ngrok http 5000
 ## Meta
 
 * No warranty expressed or implied. Software is as is. Diggity.
-* [MIT License](http://www.opensource.org/licenses/mit-license.html)
+* [MIT License](LICENSE)
 * Lovingly crafted by Twilio Developer Education.
