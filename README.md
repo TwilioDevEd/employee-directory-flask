@@ -90,23 +90,6 @@ This project is built using [Flask](http://flask.pocoo.org/) web framework.
    http://<sub-domain>.ngrok.io/directory/search
    ```
 
-   ![Configure SMS](http://howtodocs.s3.amazonaws.com/twilio-number-config-all-med.gif)
-
-
-### Expose the Application to the Wider Internet
-
-Your application will need to be accessible from the internet, you can either
-forward the necessary ports in your router, or use a tool like
-[ngrok](https://ngrok.com/) that will expose your local host to the internet.
-
-You can read [this blog post](https://www.twilio.com/blog/2015/09/6-awesome-reasons-to-use-ngrok-when-testing-webhooks.html)
-for more details on how to use ngrok. If you are using version 2.x, exposing
-a specific port should be easily done with the following command:
-
-```bash
-ngrok http 5000
-```
-
 ### How To Demo
 
 1. Text your Twilio number the name "Iron"
